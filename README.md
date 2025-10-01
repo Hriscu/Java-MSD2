@@ -1,1 +1,1 @@
-# Java-MSD2
+Hriscu Aleaxandru-Gabriel, Master in Distributed Systems, year 2
