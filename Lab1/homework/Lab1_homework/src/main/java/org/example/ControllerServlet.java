@@ -16,20 +16,17 @@ public class ControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException,IOException {
 
-        // log info
         logRequest(request);
 
         String choice = request.getParameter("choice");
-        String format = request.getParameter("format"); // text pentru client desktop
+        String format = request.getParameter("format");
 
         if ("text".equalsIgnoreCase(format)) {
-            // răspuns pentru desktop client
             response.setContentType("text/plain;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
                 out.println("Selected choice: " + choice);
             }
         } else {
-            // forward pentru browser
             if ("1".equals(choice)) {
                 request.getRequestDispatcher("page1.html").forward(request, response);
             } else if ("2".equals(choice)) {
