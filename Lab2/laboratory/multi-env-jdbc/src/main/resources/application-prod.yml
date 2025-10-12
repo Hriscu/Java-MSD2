@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+app:
+  datasource:
+    type: postgres
+    host: localhost
+    port: 5432
+    name: mydb
+    username: postgres
+    password: password123

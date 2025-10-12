@@ -1,0 +1,4 @@
+CREATE TABLE INFO_TABLE (
+    id INT PRIMARY KEY,
+    info VARCHAR(255)
+);
