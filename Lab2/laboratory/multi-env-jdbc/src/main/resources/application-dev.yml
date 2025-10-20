@@ -1,5 +1,7 @@
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
 
   h2:
     console:
@@ -14,4 +16,7 @@ app:
     name: ${DB_NAME:demo}
     username: ${DB_USER:sa}
     password: ${DB_PASSWORD:}
-    url: jdbc:h2:mem:demo;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:${app.datasource.name:demo};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+
+server:
+  port: 8081

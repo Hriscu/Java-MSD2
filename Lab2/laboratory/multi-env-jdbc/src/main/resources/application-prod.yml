@@ -11,3 +11,6 @@ app:
     name: mydb
     username: postgres
     password: password123
+
+server:
+  port: 8081

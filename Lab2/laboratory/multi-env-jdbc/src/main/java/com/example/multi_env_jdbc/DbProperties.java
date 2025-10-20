@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "app.datasource")
+/**
+ * motivation for choosing @ConfigurationProperties instead of @Value:
+ * Because a group of properties (host, port, username, etc.)
+ * need to be mapped into a single object — it's cleaner and more scalable
+ */
 public class DbProperties {
 
     private String type;
