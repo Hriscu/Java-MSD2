@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: dev
+
   application:
     name: multi-env-jdbc
   main:
@@ -8,4 +11,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: info,health
+
+server:
+  port: 8081
