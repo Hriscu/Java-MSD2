@@ -24,13 +24,13 @@ public class Course {
     @Column(nullable = false, length = 150)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
 
     @ManyToOne
     @JoinColumn(name = "pack_id")
-    private Pack pack; // null pentru compulsory
+    private Pack pack;
 
     private Integer group_count;
 
@@ -38,9 +38,17 @@ public class Course {
     private String description;
 
     public Course() {}
-    public Course(CourseType type, String code, String abbr, String name, Instructor instructor, Pack pack, Integer groupCount, String description) {
-        this.type = type; this.code = code; this.abbr = abbr; this.name = name;
-        this.instructor = instructor; this.pack = pack; this.group_count = groupCount; this.description = description;
+
+    public Course(CourseType type, String code, String abbr, String name,
+                  Instructor instructor, Pack pack, Integer groupCount, String description) {
+        this.type = type;
+        this.code = code;
+        this.abbr = abbr;
+        this.name = name;
+        this.instructor = instructor;
+        this.pack = pack;
+        this.group_count = groupCount;
+        this.description = description;
     }
 
     public Long getId() { return id; }
