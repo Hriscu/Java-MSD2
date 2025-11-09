@@ -28,6 +28,13 @@ public class DemoApplication {
             CourseRepository courseRepository
     ) {
         return args -> {
+            if (courseRepository.count() > 0) {
+                System.out.println("=== SKIP DATA GENERATION (DB already initialized) ===");
+                return;
+            }
+
+            System.out.println("=== GENERATING INITIAL FAKE DATA ===");
+
             Faker faker = new Faker(new Locale("ro"));
             Random rnd = new Random();
 
@@ -58,45 +65,12 @@ public class DemoApplication {
             Student s1 = studentService.save(new Student("S001", faker.name().fullName(), "s1@uni.ro", 1));
             Student s2 = studentService.save(new Student("S002", faker.name().fullName(), "s2@uni.ro", 1));
 
-            enrollmentService.save(new Enrollment(s1, rnd.nextBoolean()? cOptA : cOptB, p11));
+            enrollmentService.save(new Enrollment(s1, rnd.nextBoolean() ? cOptA : cOptB, p11));
             enrollmentService.save(new Enrollment(s1, cOptC, p12));
-            enrollmentService.save(new Enrollment(s2, rnd.nextBoolean()? cOptA : cOptB, p11));
+            enrollmentService.save(new Enrollment(s2, rnd.nextBoolean() ? cOptA : cOptB, p11));
             enrollmentService.save(new Enrollment(s2, cOptC, p12));
 
-            System.out.println("\n=== CRUD COURSES ===");
-
-            courseService.all().forEach(c ->
-                    System.out.println(c.getCode() + " :: " + c.getName() + " [" + c.getType() + "]")
-            );
-
-            System.out.println("\nUpdate description for OPT-A-111");
-            int updated = courseService.updateDescriptionByCode("OPT-A-111", "Descriere nouă prin @Modifying");
-            System.out.println("Rows updated = " + updated);
-
-            // Create + Delete
-            Course temp = courseService.create(new Course(
-                    CourseType.optional, "TEMP-999", "TMP", "Temporar",
-                    i1, p12, 1, "Va fi șters"
-            ));
-            System.out.println("Created TEMP-999 id=" + temp.getId());
-            courseService.delete(temp.getId());
-            System.out.println("Deleted TEMP-999");
-
-            System.out.println("\nCursuri OPTIONAL ale instructorului i2@uni.ro:");
-            courseService.byTypeAndInstructorEmail(CourseType.optional, "i2@uni.ro")
-                    .forEach(c -> System.out.println(" - " + c.getCode() + " " + c.getName()));
-
-            System.out.println("\nPacks pentru anul 1:");
-            packService.findPacksForYear(1).forEach(p ->
-                    System.out.println(" - " + p.getName() + " (sem " + p.getSemester() + ")")
-            );
-
-            System.out.println("\nStudenți anul 1:");
-            studentService.findByYear(1).forEach(s ->
-                    System.out.println(" - " + s.getCode() + " " + s.getName())
-            );
-
-            System.out.println("\n=== DONE ===\n");
+            System.out.println("=== DATA GENERATION DONE ===");
         };
     }
 }
