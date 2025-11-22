@@ -7,6 +7,7 @@ import org.example.demo.exception.ResourceNotFoundException;
 import org.example.demo.mapper.StudentMapper;
 import org.example.demo.service.StudentService;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,7 +32,7 @@ public class StudentController {
         return "W/\"student-" + s.getId() + "-" + v + "\"";
     }
 
-    @Operation(summary = "List all students (JSON or XML)")
+    @Operation(summary = "List all students (public, JSON or XML)")
     @GetMapping(produces = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE
@@ -43,7 +44,7 @@ public class StudentController {
                 .collect(Collectors.toList());
     }
 
-    @Operation(summary = "Get one student by id with ETag (supports If-None-Match)")
+    @Operation(summary = "Get one student by id with ETag (public)")
     @GetMapping(
             value = "/{id}",
             produces = {
@@ -72,7 +73,8 @@ public class StudentController {
                 .body(StudentMapper.toDTO(s));
     }
 
-    @Operation(summary = "Create a new student")
+    @Operation(summary = "Create a new student (requires ADMIN or INSTRUCTOR)")
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -87,7 +89,8 @@ public class StudentController {
                 .body(StudentMapper.toDTO(s));
     }
 
-    @Operation(summary = "Update a student (full replace)")
+    @Operation(summary = "Update a student (requires ADMIN or INSTRUCTOR)")
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PutMapping(
             value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -117,7 +120,8 @@ public class StudentController {
                 .body(StudentMapper.toDTO(s));
     }
 
-    @Operation(summary = "Delete a student")
+    @Operation(summary = "Delete a student (requires ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
 
