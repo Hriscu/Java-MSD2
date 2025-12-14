@@ -1,5 +1,5 @@
 package org.example.demo.entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ public class Instructor extends AbstractPerson {
     private AppUser user;
 
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Course> courses = new ArrayList<>();
 
     public Instructor() {}

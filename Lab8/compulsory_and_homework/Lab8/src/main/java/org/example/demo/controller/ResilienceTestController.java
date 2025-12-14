@@ -19,11 +19,10 @@ public class ResilienceTestController {
 
     @GetMapping("/api/test-retry")
     public String triggerRetryMechanism() {
-
         Map<String, Object> validDummyData = new HashMap<>();
         validDummyData.put("students", new ArrayList<>());
         validDummyData.put("courses", new ArrayList<>());
 
-        return solverClient.invokeStableMatch(validDummyData);
+        return solverClient.invokeStableMatch(validDummyData, "random");
     }
 }

@@ -12,31 +12,32 @@ import org.springframework.web.client.RestTemplate;
 public class SolverClientService {
 
     private final RestTemplate restTemplate;
-    private final String SOLVER_URL = "http://localhost:8083/api/solver/solve";
+    private final String BASE_SOLVER_URL = "http://localhost:8083/api/solver/solve";
 
     public SolverClientService() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-
         factory.setConnectTimeout(1000);
         factory.setReadTimeout(1000);
-
         this.restTemplate = new RestTemplate(factory);
     }
 
     @Retry(name = "solverRetry", fallbackMethod = "solveFallback")
-    public String invokeStableMatch(Object payload) {
-        System.out.println("--- Calling StableMatch Service (Timeout set to 1s) ---");
+    public String invokeStableMatch(Object payload, String algorithm) {
+
+        String finalUrl = BASE_SOLVER_URL + "?algorithm=" + algorithm;
+
+        System.out.println("--- Calling StableMatch Service with strategy: " + algorithm + " ---");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<Object> requestEntity = new HttpEntity<>(payload, headers);
 
-        return restTemplate.postForObject(SOLVER_URL, requestEntity, String.class);
+        return restTemplate.postForObject(finalUrl, requestEntity, String.class);
     }
 
-    public String solveFallback(Object payload, Throwable t) {
-        System.out.println("!!! StableMatch Failed (Timeout or Down). Executing Fallback. Error: " + t.getMessage());
+    public String solveFallback(Object payload, String algorithm, Throwable t) {
+        System.out.println("!!! StableMatch Failed. Fallback executed. Error: " + t.getMessage());
         return "{ \"assignments\": [], \"unassignedStudents\": [\"ALL_STUDENTS_FALLBACK\"] }";
     }
 }

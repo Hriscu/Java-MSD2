@@ -1,5 +1,6 @@
 package org.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
@@ -26,10 +27,12 @@ public class Course {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "instructor_id")
+    @JsonIgnoreProperties("courses")
     private Instructor instructor;
 
     @ManyToOne
     @JoinColumn(name = "pack_id")
+    @JsonIgnoreProperties("courses")
     private Pack pack;
 
     private Integer group_count;

@@ -35,7 +35,7 @@ public class DemoApplication {
     ) {
         return args -> {
             if (courseRepository.count() > 0) {
-                System.out.println("=== DB ALREADY POPULATED - SKIPPING ===");
+                System.out.println("=== DB ALREADY POPULATED - SKIPPING GENERATION ===");
                 return;
             }
 
@@ -46,8 +46,6 @@ public class DemoApplication {
 
             Instructor i1 = instructorService.save(new Instructor(faker.name().fullName(), "prof1@uni.ro"));
             Instructor i2 = instructorService.save(new Instructor(faker.name().fullName(), "prof2@uni.ro"));
-
-            Pack p1 = packService.save(new Pack(1, 1, "Software Engineering Track"));
 
             Course cOOP = courseService.create(new Course(
                     CourseType.compulsory, "OOP", "OOP", "Object Oriented Programming",
@@ -64,6 +62,8 @@ public class DemoApplication {
                     i2, null, 4, "PostgreSQL & SQL"
             ));
 
+            Pack p1 = packService.save(new Pack(1, 1, "Software Engineering Track"));
+
             Course cOptWeb = courseService.create(new Course(
                     CourseType.optional, "OPT-WEB", "WEB", "Modern Web Dev",
                     i2, p1, 4, "React & Angular"
@@ -78,6 +78,22 @@ public class DemoApplication {
             prefRepo.save(new InstructorPreference(cOptWeb, "OOP", 0.4));
             prefRepo.save(new InstructorPreference(cOptCloud, "DB", 1.0));
 
+            Pack p2 = packService.save(new Pack(1, 1, "Artificial Intelligence Track"));
+
+            Course cOptML = courseService.create(new Course(
+                    CourseType.optional, "OPT-ML", "ML", "Machine Learning",
+                    i1, p2, 4, "Neural Networks"
+            ));
+
+            Course cOptVis = courseService.create(new Course(
+                    CourseType.optional, "OPT-VIS", "VIS", "Computer Vision",
+                    i1, p2, 4, "Image Processing"
+            ));
+
+            prefRepo.save(new InstructorPreference(cOptML, "DB", 0.7));
+            prefRepo.save(new InstructorPreference(cOptML, "JAVA", 0.3));
+            prefRepo.save(new InstructorPreference(cOptVis, "OOP", 1.0));
+
             for (int i = 1; i <= 15; i++) {
                 String code = "S" + String.format("%03d", i);
                 String name = faker.name().fullName();
@@ -89,7 +105,7 @@ public class DemoApplication {
                 createRandomGrade(s, cDb, gradeRepo, rnd);
             }
 
-            System.out.println("=== DATA GENERATION DONE ===");
+            System.out.println("=== DATA GENERATION DONE (2 Packs Created) ===");
         };
     }
 

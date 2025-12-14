@@ -38,6 +38,6 @@ public class InstructorPrefController {
         Course c = courseRepo.findByCode(courseCode)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        return prefRepo.findByOptionalCourseId(c.getId());
+        return prefRepo.findByOptionalCourse(c);
     }
 }
