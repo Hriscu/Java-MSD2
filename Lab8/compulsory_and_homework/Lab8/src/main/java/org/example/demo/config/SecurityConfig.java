@@ -53,6 +53,8 @@ public class SecurityConfig {
                         // grades public (to show http://localhost:8081/api/grades/upload-csv)
                         .antMatchers("/api/grades/**").permitAll()
                         // public (to show http://localhost:8081/api/integration/solve-pack/1)
+                        // public (to show http://localhost:8081/api/instructor-prefs/OPT-ML?compulsoryAbbr=JAVA&weight=0.8)
+                        .antMatchers("/api/instructor-prefs/**").permitAll()
                         .antMatchers("/api/integration/**").permitAll()
                         // Swagger / OpenAPI public
                         .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()

@@ -3,7 +3,7 @@ package org.example.demo.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "instructor_preferences") // Sau instructor_preference
+@Table(name = "instructor_preferences")
 public class InstructorPreference {
 
     @Id
