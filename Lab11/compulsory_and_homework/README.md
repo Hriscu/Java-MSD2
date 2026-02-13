@@ -2,17 +2,25 @@
 
 ## Compulsory (1p)
 
-✅ Use Micrometer and Spring Boot Actuator in order to expose application metrics.  
-✅ Create a counter that will measure how many times the StableMatch algorithm is invoked.  
-✅ Create a timer that will measure the response time of the StableMatch algorithm.  
-✅ Use SLF4J to log exceptions and informative messages.  
+✅ Write unit tests for **one service class** and **one controller** (using `@WebMvcTest` and `@MockBean`).  
+✅ Mock dependencies using **Mockito**.  
+✅ Ensure tests cover at least:
+- one **happy path**
+- one **error scenario**
 
 ---
 
 ## Homework (2p)
 
-✅ Install Prometheus and Grafana.  
-✅ Collect the response times of the algorithm with Prometheus, and visualize the data in Grafana.  
-✅ Set up alerts in Grafana when memory usage exceeds a threshold.  
-✅ Use service discovery in order to allow PrefSchedule to find and invoke StableMatch microservice.  
-✅ Create multiple instances of the StableMatch microservice and implement an API Gateway with load balancing.  
+✅ Create a **Dockerfile** for the application.  
+✅ Build and run the container locally using Docker.  
+✅ Implement a simple **CI/CD pipeline**.  
+✅ Use **Testcontainers** to:
+- verify that the database schema is created automatically
+- test full **CRUD operations** for one entity
+
+---
+
+## Advanced (2p)
+
+✅ Simulate a real production deployment using **Kubernetes**.  
